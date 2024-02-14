@@ -6,9 +6,9 @@ const {
   getBooks,
   updateAuthor,
   deleteByAuthor,
-  getByAuthor,
+  // getByAuthor,
   deleteAll,
-  updateOnTitle,
+  // updateOnTitle,
 } = require("./controller.js");
 const Book = require("./model.js");
 

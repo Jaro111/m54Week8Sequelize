@@ -117,7 +117,7 @@ module.exports = {
   getBooks: getBooks,
   updateAuthor: updateAuthor,
   deleteByAuthor: deleteByAuthor,
-  getByAuthor: getByAuthor,
+  // getByAuthor: getByAuthor,
   deleteAll: deleteAll,
-  updateOnTitle: updateOnTitle,
+  // updateOnTitle: updateOnTitle,
 };
