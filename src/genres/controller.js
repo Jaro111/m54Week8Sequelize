@@ -1,4 +1,5 @@
 const Genre = require("./model");
+const Book = require("../books/model");
 
 // addGenre
 
@@ -26,7 +27,31 @@ const getAllGenres = async (req, res) => {
   }
 };
 
+// // ------------------------- GET BY GENRE -------------------------
+
+const getByGenre = async (req, res) => {
+  try {
+    const genre = await Genre.findOne({
+      where: {
+        genreName: req.params.genre,
+      },
+    });
+    myId = genre.dataValues.id;
+
+    const books = await Book.findAll({
+      where: {
+        GenreId: myId,
+      },
+      include: ["Genre", "Author"],
+    });
+    res.status(201).json({ message: `Successfull found book`, books: books });
+  } catch (error) {
+    res.status(501).json({ message: error.message, error: error });
+  }
+};
+
 module.exports = {
   addGenre: addGenre,
   getAllGenres: getAllGenres,
+  getByGenre: getByGenre,
 };
