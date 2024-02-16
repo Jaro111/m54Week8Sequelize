@@ -26,28 +26,6 @@ const getBooks = async (req, res) => {
   }
 };
 
-// ------------------------- UPDATE AUTHOR -------------------------
-
-// const updateAuthor = async (req, res) => {
-//   try {
-//     await Book.update(
-//       { author: req.body.authorToUpdate },
-//       {
-//         where: {
-//           title: req.body.chosenTitle,
-//         },
-//       }
-//     );
-//     const books = await Book.findAll();
-//     res.status(201).json({
-//       message: `Succesfull Updated ${req.body.chosenTitle}`,
-//       books: books,
-//     });
-//   } catch (error) {
-//     res.status(501).json({ message: error.message, error: error });
-//   }
-// };
-
 // ------------------------- DELETE BY TITLE -------------------------
 const deleteByTitle = async (req, res) => {
   try {
@@ -118,8 +96,14 @@ const updateOnTitle = async (req, res) => {
       //
     } else if (req.params.toUpdate === "author") {
       //
+      const author = await Author.findOne({
+        where: {
+          authorName: req.params.updated,
+        },
+      });
+      const myId = author.dataValues.id;
       await Book.update(
-        { AuthorId: req.params.updated },
+        { AuthorId: myId },
         {
           where: {
             title: req.params.title,
@@ -136,8 +120,15 @@ const updateOnTitle = async (req, res) => {
       //
     } else if (req.params.toUpdate === "genre") {
       //
+      const genre = await Genre.findOne({
+        where: {
+          genreName: req.params.updated,
+        },
+      });
+
+      const myId = genre.dataValues.id;
       await Book.update(
-        { GenreId: req.params.updated },
+        { GenreId: myId },
         {
           where: {
             title: req.params.title,
@@ -151,9 +142,13 @@ const updateOnTitle = async (req, res) => {
         include: ["Genre", "Author"],
       });
       res.status(201).json({ message: "Successfull update", book: book });
+      console.log(res.status());
     }
   } catch (error) {
-    res.status(501).json({ message: error.message, error: error });
+    res.status(501).json({
+      message: "Cannot read properties of null (reading 'dataValues')",
+      error: error,
+    });
   }
 };
 

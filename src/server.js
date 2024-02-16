@@ -24,6 +24,8 @@ const syncTables = async () => {
   Book.belongsTo(Genre);
 
   await Genre.sync();
+  // await Author.sync();
+  // await Book.sync();
   await Author.sync({ alter: true });
   await Book.sync({ alter: true });
 };
